@@ -306,69 +306,6 @@ uint8_t matrix_scan(void)
     print("THIS IS MATRIX \n");
     matrix_print();
 
-    // there are 18 bytes per keyboard, first to identify the board, 16*8 keys, 1 end byte.
-    // for (uint8_t i = 0; i < 18; i++) {
-    //     //wait for the serial data, timeout if it's been too long
-    //     //this only happened in testing with a loose wire, but does no
-    //     //harm to leave it in here
-    //     // key_timer = timer_read();
-    //     // 
-    //     while(true ){
-    //         if (timer_elapsed(key_timer) > 500){
-    //             xprintf("Timeout has occured with i = %d\n", i);
-    //             break;
-    //         }
-    //     } 
-    //     uart_data[i] = SERIAL_UART_DATA; 
-    //     xprintf("%d current data sprint\n", uart_data[i]);
-    // }
-    // while(SERIAL_UART_RXD_PRESENT){
-    //     c = SERIAL_UART_DATA;
-    // }
-    
-    //uint32_t j = 0;
-    
-    // while(SERIAL_UART_RXD_PRESENT){
-    //     c = SERIAL_UART_DATA;
-    //     xprintf("data: %d with counter %d \n", c,j);
-    //     c=0;
-    //     j++;
-    // }
-    // for (size_t i = 0; i < 10; i++) {
-    //     xprintf("in here at %d", i);
-    //     mypause(1000);
-    //     if(uart_data[1]){}
-    // }
-
-    //check for the end packet, so 0xE0
-    //will only show up here if the correct bytes were recieved
-    // xprintf("%d uart[17] \n", uart_data[17]);
-    // xprintf("%d uart[16] \n", uart_data[16]);
-    // print("WHOLE OF UART:  \n");
-    // for (size_t k = 0; k < 18; k++) {
-    //     xprintf("%d    %d \n", k, uart_data[k]);
-    // }
-    // 
-    // if (uart_data[17] == 0xE0)
-    // {
-    //     //shifting and transferring the keystates to the QMK matrix variable
-    //     // for (uint8_t i = 0; i < MATRIX_ROWS; i++) {
-    //     //     matrix[i] = (uint16_t) uart_data[i*2] | (uint16_t) uart_data[i*2+1] << 5;
-    //     // }
-    // 
-    //     print("Sucess data transfer");
-    // 
-    //     uint32_t keys = ( (uint32_t) uart_data[1] << 24)  | ( (uint32_t) uart_data[1] << 16)  | ( (uint32_t) uart_data[1] << 8)  | ( (uint32_t) uart_data[1] << 0) ;
-    // 
-    //     for(size_t i = 0; i < 18; i++){
-    //         struct PinMap temp = kb_1_mappings[i];
-    //             if( (keys >> (32 - temp.pin)) & 1){
-    //                 matrix[temp.row] |= (1L << 16) >> temp.col;
-    //         } 
-    //     }
-    // }
-
-
     matrix_scan_quantum();
     return 1;
 }

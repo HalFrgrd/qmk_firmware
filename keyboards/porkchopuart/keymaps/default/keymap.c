@@ -1,26 +1,4 @@
-// // this is the style you want to emulate.
-// // This is the canonical layout file for the Quantum project. If you want to add another keyboard,
-
 #include "mitosis.h"
-// 
-// 
-// 
-// // Fillers to make layering more clear
-// #define _______ KC_TRNS
-// #define XXXXXXX KC_NO
-// 
-// const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-// [0] = {
-//   {KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P   },
-//   {KC_A,    KC_S,    KC_D,    KC_F,    KC_G,       KC_H,    KC_J,    KC_K,    KC_L,    KC_COLON   },
-//   {KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,       KC_N,    KC_M,    KC_COMM, KC_DOT,    KC_SLASH  },
-//   {XXXXXXX, KC_1,    KC_2,    KC_3,    KC_4,       KC_5,    KC_6,    KC_8,    KC_9,     XXXXXXX}
-// }
-// 
-// 
-// 
-// 
-// };
 
 
 enum custom_keycodes {
@@ -40,7 +18,6 @@ enum {
    DB_COLON,
    DB_QUOT,
    DB_UNDS
-   
 };
 
 #define _______ KC_TRNS
@@ -59,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `----------------------------------'           `----------------------------------'
  *           ,---------------------------.    ,---------------------------.
  *    Tap:   | Esc  | L_GUI|Space | Tab  |    | Enter|BckSpc|      |      |
- *    Hold:  | Ctrl |LShft |Numbs |Navig |    |Symbol| Func |RShft |      |
+ *    Hold:  | Ctrl | Func |Numbs |Navig |    |Symbol|      |RShft | GUI  |
  *           `---------------------------'    `---------------------------'
  */
  
@@ -67,7 +44,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    \
   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,         KC_H,    KC_J,    KC_K,    KC_L,    KC_ENT , \
   KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,         KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, \
-  XXXXXXX, MT(KC_LCTL,KC_ESC), MT(MOD_LSFT, KC_LGUI), LT(NUMBERS,KC_SPC), LT(NAVIG,KC_TAB), LT(SYMB,KC_ENT), LT(FUNC,KC_BSPC), OSM(MOD_RSFT), XXXXXXX , XXXXXXX      \
+  XXXXXXX, CTL_T(KC_ESC), LT(FUNC, KC_LGUI), LT(NUMBERS,KC_SPC), LT(NAVIG,KC_TAB), LT(SYMB,KC_ENT), KC_BSPC, KC_RSFT, KC_LGUI , XXXXXXX      \
 ), 
 
 /* ALTTHERN
@@ -105,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 * |  Undo|  Cut | Copy |Paste |SelAll|           |ScrDwn|  Home|  Del | End  |CtShfT|
 * `----------------------------------'           `----------------------------------'
 *            ,---------------------------.    ,---------------------------.
-*            |      |      |      |      |    |Ctrl- |Ctrl+ |Ctrl0 |      |
+*            |      |      |      |      |    |Ctrl+ |BckSpc|Ctrl+ |Ctrl0 |
 *            |      |      |      | Navig|    |      |      |      |      |
 *            `---------------------------'    `---------------------------'
 */
@@ -113,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    KC_ESC , LCTL(KC_W), LCTL(KC_L), KC_ESC, LCTL(KC_T) ,      LCTL(KC_Y), KC_PGUP, KC_UP  , KC_PGDN, XXXXXXX , \
    LSFT(LCTL(KC_TAB)), LCTL(KC_TAB), LALT(KC_TAB), KC_LCTL, KC_LSHIFT ,      KC_MS_WH_UP, KC_LEFT, KC_DOWN, KC_RGHT, KC_ENT , \
    LCTL(KC_Z), LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), LCTL(KC_A),      KC_MS_WH_DOWN, KC_HOME, KC_DEL ,  KC_END, LSFT(LCTL(KC_T)),  \
-   XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, _______,      LCTL(KC_MINS), LCTL(KC_PLUS), LCTL(KC_0)   , XXXXXXX , XXXXXXX           \
+   XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, _______,      LCTL(KC_PLUS),KC_BSPC , LCTL(KC_PLUS) , LCTL(KC_0), XXXXXXX          \
 ),
 
 /* Numbers
