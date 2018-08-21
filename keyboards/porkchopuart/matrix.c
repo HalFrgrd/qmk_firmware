@@ -38,8 +38,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   (byte & 0x08 ? '1' : '0'), \
   (byte & 0x04 ? '1' : '0'), \
   (byte & 0x02 ? '1' : '0'), \
-  (byte & 0x01 ? '1' : '0') 
-  
+  (byte & 0x01 ? '1' : '0')
+
   #define BYTE_TO_BINARY_PATTERN32 "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c"
   #define BYTE_TO_BINARY32(byte32)  \
   (byte32 & 0x80000000 ? '1' : '0'), \
@@ -73,8 +73,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   (byte32 & 0x08 ? '1' : '0'), \
   (byte32 & 0x04 ? '1' : '0'), \
   (byte32 & 0x02 ? '1' : '0'), \
-  (byte32 & 0x01 ? '1' : '0') 
-  
+  (byte32 & 0x01 ? '1' : '0')
+
   #define BYTE_TO_BINARY_PATTERN16 "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c"
   #define BYTE_TO_BINARY16(byte16)  \
   (byte16 & 0x8000 ? '1' : '0'), \
@@ -92,7 +92,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   (byte16 & 0x08 ? '1' : '0'), \
   (byte16 & 0x04 ? '1' : '0'), \
   (byte16 & 0x02 ? '1' : '0'), \
-  (byte16 & 0x01 ? '1' : '0') 
+  (byte16 & 0x01 ? '1' : '0')
 
 #if (MATRIX_COLS <= 8)
 #    define print_matrix_header()  print("\nr/c 01234567\n")
@@ -136,8 +136,8 @@ struct PinMap kb_1_mappings[19] = { {9,0,0},\
         {6,3,2},\
         {8,3,3},\
         {10,3,4}};
-        
-        
+
+
 struct PinMap kb_2_mappings[19] = { {0,0,9},\
         {29,0,8},\
         {23,0,7},\
@@ -196,9 +196,9 @@ void mypause(uint16_t t){
 }
 
 void matrix_init(void) {
-    debug_enable = true;
-    debug_matrix = true;
-    debug_mouse = true;
+    //debug_enable = true;
+    //debug_matrix = true;
+    //debug_mouse = true;
     matrix_init_quantum();
 }
 
@@ -223,50 +223,50 @@ uint8_t matrix_scan(void)
         //wait for the serial data, timeout if it's been too long
         //this only happened in testing with a loose wire, but does no
         //harm to leave it in here
-        
+
         while(!SERIAL_UART_RXD_PRESENT){
             timeout++;
             if (timeout > 1000000){
-                xprintf("Timeout has occured with i = %d\n", i);
+                //xprintf("Timeout has occured with i = %d\n", i);
                 break;
             }
-        } 
+        }
         uart_data[i] = SERIAL_UART_DATA;
-        xprintf("Loop %d with uart data %d \n", i, uart_data[i]);
+        //xprintf("Loop %d with uart data %d \n", i, uart_data[i]);
     }
-    
+
     // print("HELLO:  \n");
     // for (int k = 0; k < 11; k++) {
     //     xprintf("%d    %d \n", k, uart_data[k]);
     // }
-    
+
     if(uart_data[10] != 0xE0){
-        print("UNSUCCESSFULL");
-        for (size_t j = 0; j < MATRIX_ROWS; j++) {
+        //print("UNSUCCESSFULL");
+        for (int j = 0; j < MATRIX_ROWS; j++) {
             matrix[j] = 0;
         }
     }
-    
+
     //check for the end packet, the key state bytes use the LSBs, so 0xE0
     //will only show up here if the correct bytes were recieved
     if (uart_data[10] == 0xE0)
     {
         //clear matrix
-        for (size_t j = 0; j < MATRIX_ROWS; j++) {
+        for (int j = 0; j < MATRIX_ROWS; j++) {
             matrix[j] = 0;
         }
-        
-        
+
+
         uint32_t keys_1 = ( (uint32_t) uart_data[1] << 24)  | \
                         ( (uint32_t) uart_data[2] << 16)  | \
                         ( (uint32_t) uart_data[3] << 8)   | \
                         ( (uint32_t) uart_data[4] << 0) ;
-        
+
         uint32_t keys_2 = ( (uint32_t) uart_data[6] << 24)  | \
                         ( (uint32_t) uart_data[7] << 16)  | \
                         ( (uint32_t) uart_data[8] << 8)   | \
                         ( (uint32_t) uart_data[9] << 0) ;
-                        
+
         // print("SUCCESS TRANSFER\n");
         // print("01234567012345670123456701234567\n");
         // xprintf(BYTE_TO_BINARY_PATTERN32, BYTE_TO_BINARY32(keys_1));
@@ -284,9 +284,9 @@ uint8_t matrix_scan(void)
                 // print("\n");
                 matrix[temp.row] |= (1L << temp.col);
                 //xprintf("%d", matrix[temp.row]);
-            } 
-        } 
-        
+            }
+        }
+
         for(int i = 0; i < 19; i++){
             struct PinMap temp = kb_2_mappings[i];
             //xprintf("Dealing with: pin %d, row %d, col %d. \n", temp.pin, temp.row, temp.col);
@@ -298,13 +298,13 @@ uint8_t matrix_scan(void)
                 // print("\n");
                 matrix[temp.row] |= (1L << temp.col);
                 //xprintf("%d", matrix[temp.row]);
-            } 
-        } 
-        
+            }
+        }
+
     }
-    
-    print("THIS IS MATRIX \n");
-    matrix_print();
+
+    //print("THIS IS MATRIX \n");
+    //matrix_print();
 
     matrix_scan_quantum();
     return 1;

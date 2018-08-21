@@ -26,8 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT_ID      0x6060
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    Unknown
-#define PRODUCT         Mitosis
-#define DESCRIPTION     q.m.k. keyboard firmware for Mitosis
+#define PRODUCT         Porkchop
+#define DESCRIPTION     Porkchop wireless keyboard
 
 /* key matrix size */
 #define MATRIX_ROWS 4
@@ -55,10 +55,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PREVENT_STUCK_MODIFIERS
 
 /* disable debug print */
-//#define NO_DEBUG
+#define NO_DEBUG
 
 /* disable print */
-//#define NO_PRINT
+#define NO_PRINT
 
 /* disable action features */
 //#define NO_ACTION_LAYER
