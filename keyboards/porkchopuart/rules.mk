@@ -69,7 +69,7 @@ NKRO_ENABLE = yes		# USB Nkey Rollover - not yet supported in LUFA
 UNICODE_ENABLE = yes 		# Unicode
 # BLUETOOTH_ENABLE = yes # Enable Bluetooth with the Adafruit EZ-Key HID
 TAP_DANCE_ENABLE = yes
-AUTO_SHIFT_ENABLE = yes
+# AUTO_SHIFT_ENABLE = yes
 
 USB = /dev/ttyACM0
 

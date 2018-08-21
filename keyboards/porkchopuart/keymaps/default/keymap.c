@@ -23,7 +23,8 @@ enum {
    DB_QUOT,
    DB_UNDS,
    MALTTAB,
-   MALTSTAB
+   MALTSTAB,
+   MESCNOMODS
 };
 
 #define _______ KC_TRNS
@@ -33,14 +34,18 @@ enum {
 #define CALTDEL LCTL(LALT(KC_DEL))
 #define TSKMGR LCTL(LSFT(KC_ESC))
 
-#define NO_AUTO_SHIFT_SPECIAL
-#define NO_AUTO_SHIFT_NUMERIC
 
 
 //changes: brightness keys, putting all symbols on one layer for programming
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+
+
+
+
+
+
 
 
 /* Qwerty
@@ -50,11 +55,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------|           |------+------+------+------+------|
  * |   A  |  S   |   D  |   F  |   G  |           |   H  |   J  |   K  |   L  |Shft/Ent|
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |Ctl /Z|   X  |   C  |   V  |   B  |           |   N  |   M  |   ,  |   .  |   /  |
+ * |Ctl /Z|  X   |   C  |   V  |   B  |           |   N  |   M  |   ,  |   .  |   /  |
  * `----------------------------------'           `----------------------------------'
  *           ,---------------------------.    ,---------------------------.
- *    Tap:   |GUI   | Tab  |Space |      |    | Del  |BckSpc| Esc  |      |
- *    Hold:  |      | Ctrl |Numbs |Navig |    |Symbol|      |RShft | Func |
+ *    Tap:   |GUI   |      |Space |      |    |      |BckSpc|      |      |
+ *    Hold:  |      |      |Numbs |Navig |    |Symbol|      |      | Func |
  *           `---------------------------'    `---------------------------'
  */
 
@@ -62,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    \
   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,         KC_H,    KC_J,    KC_K,    KC_L,    RSFT_T(KC_ENT) , \
   CTL_T(KC_Z),    KC_X,    KC_C,    KC_V,    KC_B,         KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, \
-  XXXXXXX, KC_LGUI, LCTL_T(KC_TAB), LT(NUMBERS,KC_SPC), KCNAVIG, LT(SYMB,KC_DEL), KC_BSPC, RSFT_T(KC_ESC), MO(FUNC) , XXXXXXX      \
+  XXXXXXX, KC_LGUI, XXXXXXX, LT(NUMBERS,KC_SPC), KCNAVIG, MO(SYMB), KC_BSPC, XXXXXXX, MO(FUNC) , XXXXXXX      \
 ),
 
 /* ALTTHERN
@@ -88,25 +93,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 **/
 
+
+
 /* Navigation
 *
 * ,----------------------------------.           ,----------------------------------.
-* | Esc  |C W   |AlSTab|  Esc | C T  |           | CtrY | pgUp |  Up  | pgDwn|Alt+F4|
+* | Esc  |C W   |      |      |CtShfT|           |Ctrl0 | pgUp |  Up  | pgDwn|Alt+F4|
 * |------+------+------+------+------|           |------+------+------+------+------|
-* | CSTb | CTb  |AltTab| Ctrl | Shft |           |ScrlUp| Left | Down | Right| Enter|
+* | Ctrl |CltTb |AltTab| Shft | Tab  |           |ScrUp | Left | Down | Right| Enter|
 * |------+------+------+------+------|           |------+------+------+------+------|
-* |  Undo|  Cut | Copy |Paste |SelAll|           |ScrDwn|  Home| GUI  | End  |CtShfT|
+* | Ctrl | Undo |      |      | GUI  |           |ScrDwn| Home |      | End  |      |
 * `----------------------------------'           `----------------------------------'
 *            ,---------------------------.    ,---------------------------.
-*            |      |      |      |      |    |Ctrl+ |BckSpc|Ctrl- |Ctrl0 |
+*            |      |      |      |      |    | Del  |BckSpc|      |      |
 *            |      |      |      | Navig|    |      |      |      |      |
 *            `---------------------------'    `---------------------------'
 */
 [NAVIG] = KEYMAP( \
-   KC_ESC , LCTL(KC_W), M(MALTSTAB), KC_ESC, LCTL(KC_T) ,      LCTL(KC_Y), KC_PGUP, KC_UP  , KC_PGDN, LALT(KC_F4) , \
-   LSFT(LCTL(KC_TAB)), LCTL(KC_TAB), M(MALTTAB), KC_LCTL, KC_LSHIFT ,      KC_MS_WH_UP, KC_LEFT, KC_DOWN, KC_RGHT, KC_ENT , \
-   LCTL(KC_Z), LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), LCTL(KC_A),      KC_MS_WH_DOWN, KC_HOME, KC_LGUI ,  KC_END, LSFT(LCTL(KC_T)),  \
-   XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, _______,      LCTL(KC_PLUS),KC_BSPC , LCTL(KC_MINS) , LCTL(KC_0), XXXXXXX          \
+   KC_ESC , LCTL(KC_W), XXXXXXX, XXXXXXX, LSFT(LCTL(KC_T)) ,     LCTL(KC_0) , KC_PGUP, KC_UP  , KC_PGDN, LALT(KC_F4) , \
+   KC_LCTL, LCTL(KC_TAB), M(MALTTAB), KC_LSHIFT, KC_TAB ,      KC_MS_WH_UP, KC_LEFT, KC_DOWN, KC_RGHT, _______ , \
+   KC_LCTL, LCTL(KC_Z), XXXXXXX, XXXXXXX, KC_LGUI,       KC_MS_WH_DOWN, KC_HOME, XXXXXXX ,  KC_END, XXXXXXX,  \
+   XXXXXXX,  _______, _______, _______, _______,      KC_DEL, KC_BSPC , _______,_______, XXXXXXX          \
 ),
 
 /* Number
@@ -119,16 +126,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |  z   |  x   | Space| Left |Right |           |   *  |   1  |   2  |   3  |  /   |
  * `----------------------------------'           `----------------------------------'
  *            ,---------------------------.    ,---------------------------.
- *            |      |      |      |      |    | Del  |BckSpc| (    |  )   |
+ *            |      |      |      |      |    | BckSpc|del  | (    |  )   |
  *            |      |      | Numbs|      |    |      |      |      |      |
  *            `---------------------------'    `---------------------------'
  */
+
+ /*
 [NUMBERS] = KEYMAP( \
    XXXXXXX, KC_A   , KC_B   , KC_DLR , KC_PERC,      KC_PLUS, KC_7   , KC_8   , KC_9   , KC_MINS, \
    KC_EXLM, KC_Y,    KC_E,    KC_EQL , KC_DOT ,      KC_0   , KC_4   , KC_5   , KC_6   , KC_ENT , \
    KC_Z,    KC_X,    KC_SPC,  KC_LEFT, KC_RIGHT,      KC_ASTR, KC_1   , KC_2   , KC_3   , KC_SLSH, \
-   XXXXXXX, _______, _______, _______, _______,      KC_DEL , KC_BSPC, KC_LPRN, KC_RPRN, XXXXXXX  \
- ),
+   XXXXXXX, _______, _______, _______, _______,       KC_BSPC, KC_DEL,  KC_LPRN, KC_RPRN, XXXXXXX  \
+ ), */
+
 
 /* Function
  *
@@ -144,11 +154,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            |      |      |      |      |    |      |      | Func |      |
  *            `---------------------------'    `---------------------------'
  */
+
+ /* Function ThinkPad-like
+ *
+ * ,----------------------------------.           ,----------------------------------.
+ * | Caps | Mute |VolDwn| VolUp|      |           |      |      |  F11  | F12 |      |
+ * |------+------+------+------+------|           |------+------+------+------+------|
+ * | F1   |  F2  |  F3  | F4   |  F5  |           | F6   |  F7  |  F8  |  F9  | F10  |
+ * |------+------+------+------+------|           |------+------+------+------+------|
+ * |CALTDEL|TSKMGR|     |      |      |           |      |ScrSht|      |      |      |
+ * `----------------------------------'           `----------------------------------'
+ *            ,---------------------------.    ,---------------------------.
+ *            |Reset |      |      |      |    |      |      |      |      |
+ *            |      |      |      |      |    |      |      | Func |      |
+ *            `---------------------------'    `---------------------------'
+ */
 [FUNC] = KEYMAP( \
-   KC_LNUM, XXXXXXX, XXXXXXX, XXXXXXX, KC__VOLUP,    XXXXXXX, KC_F7   , KC_F8   , KC_F9   , KC_F10, \
-   CALTDEL, TSKMGR, XXXXXXX, KC_CAPS, KC__VOLDOWN,  KC_INS , KC_F4   , KC_F5   , KC_F6   , KC_F11, \
-   XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCR, KC_MUTE,      XXXXXXX, KC_F1   , KC_F2   , KC_F3   , KC_F12, \
-   XXXXXXX, RESET  ,  _______, _______, _______,     _______, _______ , _______, XXXXXXX , XXXXXXX  \
+   KC_CAPS, KC_MUTE, KC__VOLDOWN, KC__VOLUP, XXXXXXX,XXXXXXX,XXXXXXX , KC_F11 , KC_F12  , XXXXXXX, \
+   KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,     KC_F6  , KC_F7   , KC_F8  , KC_F9   , KC_F10, \
+   CALTDEL, TSKMGR , XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, KC_PSCR , XXXXXXX, XXXXXXX , XXXXXXX, \
+   XXXXXXX, RESET  , _______, _______, _______,     _______, _______ , _______, _______ , XXXXXXX  \
 ),
 
 /* Symbol
@@ -192,16 +217,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, \
   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX  \
-)
+),
 
-/* QwertyKinda
+/* QwertyKindaELY
  *
  * ,----------------------------------.           ,----------------------------------.
  * |   Q  |   W  |   E  |   R  |   T  |           |   Y  |   U  |   I  |   O  |   P  |
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |   A  |  S   |   D  |F/Func|   G  |           |   H  |   J  |   K  |   L  |Ent/Shft|
+ * |Shift/a| S   |   D  |   F  |   G  |           |   H  |   J  |   K  |   L  |  Ent  |
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |Ctl /Z|   X  |   C  |   V  |   B  |           |   N  |   M  |   ,  |   .  |   /  |
+ * |Ctl /Z|   X  |   C  |   V  |   B  |           |   N  |   M  |   ,  |   .  |Func wiht ctrl z |
  * `----------------------------------'           `----------------------------------'
  *           ,---------------------------.    ,---------------------------.
  *    Tap:   |      |      |Space |      |    |      |BckSpc|     |      |
@@ -213,9 +238,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   * ,----------------------------------.           ,----------------------------------.
   * |      |      |      |      |      |           |      |      |      |      |      |
   * |------+------+------+------+------|           |------+------+------+------+------|
-  * |      |      |      | Func |      |           |      |      |      |      |      |
-  * |------+------+------+------+------|           |------+------+------+------+------|
   * |      |      |      |      |      |           |      |      |      |      |      |
+  * |------+------+------+------+------|           |------+------+------+------+------|
+  * |      |      |      |      |      |           |      |      |      |      | func |
   * `----------------------------------'           `----------------------------------'
   *            ,---------------------------.    ,---------------------------.
   *            |      |      |      |      |    |      |BckSpc|      |      |
@@ -223,59 +248,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   *            `---------------------------'    `---------------------------'
   */
 
-/* Lower   =-+/%^.*<>
+
+/* Lower
 *
 * ,----------------------------------.           ,----------------------------------.
 * |      |  -   |   +  |  =   |   %  |           |      |      |  *   |   /  |      |
 * |------+------+------+------+------|           |------+------+------+------+------|
 * |   1  |  2   |  3   |  4   |  5   |           |   6  |  7   |  8   |  9   |  0   |
 * |------+------+------+------+------|           |------+------+------+------+------|
-* |      |      |      |      |      |           |      |      |      |  .   |      |
+* | Ctrl | [DB] | (DB) | {DB} |      |           |      |      |  ,   |  .   |  /   |
 * `----------------------------------'           `----------------------------------'
 *            ,---------------------------.    ,---------------------------.
-*            |      |      |      |      |    |      |  Del |      |      |
-*            |      |      | Lower|      |    |      |Adjust|      |      |
+*            |      |      |      |      |    | Del  | BckSpc|     |      |
+*            |      |      | Lower|      |    |      |      |      |      |
 *            `---------------------------'    `---------------------------'
 */
 
-/* Raise
-*
-* ,----------------------------------.           ,----------------------------------.
-* |      |      |      |BckSpc|CrlShT|           |      | pgUp |  Up  | pgDwn|      |
-* |------+------+------+------+------|           |------+------+------+------+------|
-* | Shift|CtrTab|AltTab| Ctrl | Gui  |           |      |  Left| Down | Right|BckSpc|
-* |------+------+------+------+------|           |------+------+------+------+------|
-* | Ctrl |      |      | Tabs |      |           |      | Home |      | End  |      |
-* `----------------------------------'           `----------------------------------'
-*            ,---------------------------.    ,---------------------------.
-*            |      |      |      |      |    |      |      |      |      |
-*            |      |      |Adjust|      |    |      | Raise|      |      |
-*            `---------------------------'    `---------------------------'
-*/
+[NUMBERS] = KEYMAP( \
+  XXXXXXX, KC_MINS, KC_PLUS, KC_EQL , KC_PERC,      XXXXXXX, XXXXXXX, KC_ASTR, KC_SLSH, XXXXXXX, \
+  KC_1   , KC_2   , KC_3   , KC_4   , KC_5   ,      KC_6   , KC_7   , KC_8   , KC_9   , KC_0   , \
+  KC_LCTL, TD(DB_SQ_BRACK), DB_PR_BRACK, DB_SQ_BRACK, XXXXXXX,      XXXXXXX, XXXXXXX, KC_COMM, KC_DOT , KC_SLSH, \
+  XXXXXXX, _______, XXXXXXX, _______, _______,      KC_DEL, KC_BSPC, XXXXXXX, _______, XXXXXXX  \
+)
 
-/* Adjust
-*
-* ,----------------------------------.           ,----------------------------------.
-* |      |      |  [   |  (   |  {   |           |   }  |   )  |  ]   |      |      |
-* |------+------+------+------+------|           |------+------+------+------+------|
-* |  !   |  @   |  #   |  $   |  %   |           |   ^  |   &  |  *   |  (   |  )   |
-* |------+------+------+------+------|           |------+------+------+------+------|
-* |  \   |  |   |      |      |      |           |      |      |      |      |      |
-* `----------------------------------'           `----------------------------------'
-*            ,---------------------------.    ,---------------------------.
-*            |      |      |      |      |    |      |      |      |      |
-*            |      |      |Adjust|      |    |      |Adjust|      |      |
-*            `---------------------------'    `---------------------------'
-*/
 
 };
 
 
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-//    [DB_SQ_BRACK] = ACTION_TAP_DANCE_DOUBLE(KC_LBRC,KC_RBRC),
-//    [DB_CR_BRACK] = ACTION_TAP_DANCE_DOUBLE(KC_LCBR, KC_RCBR),
-//    [DB_PR_BRACK] = ACTION_TAP_DANCE_DOUBLE(KC_LPRN,KC_RPRN),
+   [DB_SQ_BRACK] = ACTION_TAP_DANCE_DOUBLE(KC_LBRC,KC_RBRC),
+   [DB_CR_BRACK] = ACTION_TAP_DANCE_DOUBLE(KC_LCBR, KC_RCBR),
+   [DB_PR_BRACK] = ACTION_TAP_DANCE_DOUBLE(KC_LPRN,KC_RPRN),
 //    [DB_QUOT]     = ACTION_TAP_DANCE_DOUBLE(KC_QUOT,KC_DQUO),
 //    [DB_UNDS]     = ACTION_TAP_DANCE_DOUBLE(KC_MINS,KC_UNDS),
 //    [DB_COLON]    = ACTION_TAP_DANCE_DOUBLE(KC_SCOLON,KC_COLN)
@@ -312,6 +316,11 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
         //         return false;
         //     }
         // }
+
+        case MESCNOMODS: {
+          clear_mods();
+          return MACRO(T(ESC));
+        }
 
         case MALTTAB: {
             return MACRO(D(LALT), T(TAB), END);

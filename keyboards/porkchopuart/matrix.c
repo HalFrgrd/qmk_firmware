@@ -117,6 +117,9 @@ struct PinMap {
     uint8_t col;
 };
 
+//pin 13 maps to position 0,1 in the matrix
+
+/*
 struct PinMap kb_1_mappings[19] = { {9,0,0},\
         {13,0,1},\
         {17,0,2},\
@@ -137,7 +140,6 @@ struct PinMap kb_1_mappings[19] = { {9,0,0},\
         {8,3,3},\
         {10,3,4}};
 
-
 struct PinMap kb_2_mappings[19] = { {0,0,9},\
         {29,0,8},\
         {23,0,7},\
@@ -157,6 +159,71 @@ struct PinMap kb_2_mappings[19] = { {0,0,9},\
         {3,3,7},\
         {1,3,6},\
         {30,3,5}};
+
+
+*/
+
+struct PinMap kb_1_mappings[19] = { {30,0,0},\
+        {22,0,1},\
+        {21,0,2},\
+        {18,0,3},\
+        {19,0,4},\
+        {4,1,0},\
+        {3,1,1},\
+        {17,1,2},\
+        {10,1,3},\
+        {8,1,4},\
+        {2,2,0},\
+        {0,2,1},\
+        {29,2,2},\
+        {5,2,3},\
+        {6,2,4},\
+        {23,3,1},\
+        {13,3,2},\
+        {9,3,3},\
+        {7,3,4}};
+
+struct PinMap kb_2_mappings[19] = { {10,0,9},\
+        {19,0,8},\
+        {18,0,7},\
+        {21,0,6},\
+        {22,0,5},\
+        {5,1,9},\
+        {6,1,8},\
+        {23,1,7},\
+        {30,1,6},\
+        {1,1,5},\
+        {7,2,9},\
+        {9,2,8},\
+        {13,2,7},\
+        {4,2,6},\
+        {3,2,5},\
+        {17,3,8},\
+        {29,3,7},\
+        {0,3,6},\
+        {2,3,5}};
+        
+struct PinMap kb_2_mappings[19] = { {30,0,9},\
+        {22,0,8},\
+        {21,0,7},\
+        {18,0,6},\
+        {19,0,5},\
+        {4,1,9},\
+        {3,1,8},\
+        {17,1,7},\
+        {10,1,6},\
+        {8,1,5},\
+        {2,2,9},\
+        {0,2,8},\
+        {29,2,7},\
+        {5,2,6},\
+        {6,2,5},\
+        {23,3,8},\
+        {13,3,7},\
+        {9,3,6},\
+        {7,3,5}};
+
+
 
 /* matrix state(1:on, 0:off) */
 static matrix_row_t matrix[MATRIX_ROWS];
@@ -196,9 +263,9 @@ void mypause(uint16_t t){
 }
 
 void matrix_init(void) {
-    //debug_enable = true;
-    //debug_matrix = true;
-    //debug_mouse = true;
+    debug_enable = true;
+    debug_matrix = true;
+    debug_mouse = true;
     matrix_init_quantum();
 }
 
@@ -218,6 +285,7 @@ uint8_t matrix_scan(void)
 
     //trust the external keystates entirely, erase the last data
     uint8_t uart_data[18] = {0};
+
 
     for (uint8_t i = 0; i < 11; i++) {
         //wait for the serial data, timeout if it's been too long
@@ -239,6 +307,8 @@ uint8_t matrix_scan(void)
     // for (int k = 0; k < 11; k++) {
     //     xprintf("%d    %d \n", k, uart_data[k]);
     // }
+
+    xprintf("Final piece of data: %d \n", uart_data[10]);
 
     if(uart_data[10] != 0xE0){
         //print("UNSUCCESSFULL");
@@ -303,8 +373,8 @@ uint8_t matrix_scan(void)
 
     }
 
-    //print("THIS IS MATRIX \n");
-    //matrix_print();
+    // print("THIS IS MATRIX \n");
+    // matrix_print();
 
     matrix_scan_quantum();
     return 1;
