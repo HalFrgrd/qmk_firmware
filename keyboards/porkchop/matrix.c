@@ -203,26 +203,6 @@ struct PinMap kb_2_mappings[19] = { {10,0,9},\
         {0,3,6},\
         {2,3,5}};
         
-struct PinMap kb_2_mappings[19] = { {30,0,9},\
-        {22,0,8},\
-        {21,0,7},\
-        {18,0,6},\
-        {19,0,5},\
-        {4,1,9},\
-        {3,1,8},\
-        {17,1,7},\
-        {10,1,6},\
-        {8,1,5},\
-        {2,2,9},\
-        {0,2,8},\
-        {29,2,7},\
-        {5,2,6},\
-        {6,2,5},\
-        {23,3,8},\
-        {13,3,7},\
-        {9,3,6},\
-        {7,3,5}};
-
 
 
 /* matrix state(1:on, 0:off) */
@@ -308,7 +288,7 @@ uint8_t matrix_scan(void)
     //     xprintf("%d    %d \n", k, uart_data[k]);
     // }
 
-    xprintf("Final piece of data: %d \n", uart_data[10]);
+    // xprintf("Final piece of data: %d \n", uart_data[10]);
 
     if(uart_data[10] != 0xE0){
         //print("UNSUCCESSFULL");
