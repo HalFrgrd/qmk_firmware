@@ -1,9 +1,5 @@
 /*
-<<<<<<< HEAD
-Copyright 2012 Jun Wako <wakojun@gmail.com>
-=======
 Copyright 2017 REPLACE_WITH_YOUR_NAME
->>>>>>> 375aa9f6bc906835cd078bc0ca353471046cd36c
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,40 +21,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-<<<<<<< HEAD
-
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0x6060
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    Unknown
-#define PRODUCT         Porkchop
-#define DESCRIPTION     Porkchop wireless keyboard
+#define MANUFACTURER    Hf
+#define PRODUCT         hf40finale
+#define DESCRIPTION     A forty percent custom
 
 /* key matrix size */
 #define MATRIX_ROWS 4
-#define MATRIX_COLS 10
-
-/* define if matrix has ghost */
-//#define MATRIX_HAS_GHOST
-
-/* number of backlight levels */
-//#define BACKLIGHT_LEVELS 3
-
-#define ONESHOT_TIMEOUT 500
-
-
-/* key combination for command */
-=======
-#define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x0000
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    You
-#define PRODUCT         porkchop
-#define DESCRIPTION     A custom keyboard
-
-/* key matrix size */
-#define MATRIX_ROWS 8
-#define MATRIX_COLS 7
+#define MATRIX_COLS 14
 
 /*
  * Keyboard Matrix Assignments
@@ -70,13 +42,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *                  ROW2COL = ROW = Anode (+), COL = Cathode (-, marked on diode)
  *
 */
-#define MATRIX_ROW_PINS { D3, D2, D4, C6, B1, B3, B2, B6 }
+#define MATRIX_ROW_PINS { B1, B3, B2, B6 }
 #define MATRIX_COL_PINS { E6, B4, B5, F4, F5, F6, F7 }
 #define UNUSED_PINS
 
 /* COL2ROW, ROW2COL, or CUSTOM_MATRIX */
 #define DIODE_DIRECTION COL2ROW
- 
+
 // #define BACKLIGHT_PIN B7
 // #define BACKLIGHT_BREATHING
 // #define BACKLIGHT_LEVELS 3
@@ -134,13 +106,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* key combination for magic key command */
->>>>>>> 375aa9f6bc906835cd078bc0ca353471046cd36c
 #define IS_COMMAND() ( \
     keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
 )
 
-<<<<<<< HEAD
-=======
 /* control how magic key switches layers */
 //#define MAGIC_KEY_SWITCH_LAYER_WITH_FKEYS  true
 //#define MAGIC_KEY_SWITCH_LAYER_WITH_NKEYS  true
@@ -177,17 +146,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define MAGIC_KEY_NKRO           N
 //#define MAGIC_KEY_SLEEP_LED      Z
 
->>>>>>> 375aa9f6bc906835cd078bc0ca353471046cd36c
 /*
  * Feature disable options
  *  These options are also useful to firmware size reduction.
  */
 
-<<<<<<< HEAD
-#define PREVENT_STUCK_MODIFIERS
-
-=======
->>>>>>> 375aa9f6bc906835cd078bc0ca353471046cd36c
 /* disable debug print */
 //#define NO_DEBUG
 
@@ -201,24 +164,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_MACRO
 //#define NO_ACTION_FUNCTION
 
-<<<<<<< HEAD
-//UART settings for communication with the RF microcontroller
-#define SERIAL_UART_BAUD 9600
-#define SERIAL_UART_DATA UDR1
-#define SERIAL_UART_UBRR (F_CPU / (16UL * SERIAL_UART_BAUD) - 1)
-#define SERIAL_UART_TXD_READY (UCSR1A & _BV(UDRE1))
-#define SERIAL_UART_RXD_PRESENT (UCSR1A & _BV(RXC1))
-#define SERIAL_UART_INIT() do { \
-    	/* baud rate */ \
-    	UBRR1L = SERIAL_UART_UBRR; \
-    	/* baud rate */ \
-    	UBRR1H = SERIAL_UART_UBRR >> 8; \
-    	/* enable TX and RX */ \
-    	UCSR1B = _BV(TXEN1) | _BV(RXEN1); \
-    	/* 8-bit data */ \
-    	UCSR1C = _BV(UCSZ11) | _BV(UCSZ10); \
-  	} while(0)
-=======
 /*
  * MIDI options
  */
@@ -241,6 +186,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* override number of MIDI tone keycodes (each octave adds 12 keycodes and allocates 12 bytes) */
 //#define MIDI_TONE_KEYCODE_OCTAVES 1
->>>>>>> 375aa9f6bc906835cd078bc0ca353471046cd36c
 
 #endif
