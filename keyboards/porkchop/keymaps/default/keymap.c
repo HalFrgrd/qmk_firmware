@@ -1,6 +1,7 @@
 #include "print.h"
 #include <print.h>
 #include "debug.h"
+#include "util.h"
 #include "mitosis.h"
 
 
@@ -10,6 +11,7 @@ enum custom_keycodes {
   NUMBERS,
   FUNC,
   SYMB,
+  MOUSE,
   BLANCK,
 };
 
@@ -28,7 +30,8 @@ enum {
 enum {
    ALT_TAB = SAFE_RANGE,
    SFT_ALT_TAB,
-   MNAVIG
+   MNAVIG,
+   MEMAIL,
 };
 
 #define _______ KC_TRNS
@@ -49,13 +52,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,----------------------------------.           ,----------------------------------.
  * |   Q  |   W  |   E  |   R  |   T  |           |   Y  |   U  |   I  |   O  |   P  |
  * |------+------+------+------+------|           |------+------+------+------+------|
- * |   A  |  S   |   D  |   F  |   G  |           |   H  |   J  |   K  |   L  |Shft/Ent|
+ * |   A  | S   |   D  |   F  |   G  |           |   H  |   J  |   K  |   L  |Shft/Ent|
  * |------+------+------+------+------|           |------+------+------+------+------|
  * |Ctl /Z|  X   |   C  |   V  |   B  |           |   N  |   M  |   ,  |   .  |   /  |
  * `----------------------------------'           `----------------------------------'
  *           ,---------------------------.    ,---------------------------.
  *    Tap:   |      |GUI   |Space | Tab  |    | Del  |BckSpc|      |      |
- *    Hold:  |      |      |Numbs |Navig |    |Symbol|      | Func |      |
+ *    Hold:  |      | Alt  |Numbs |Navig |    |Symbol|      | Func |      |
  *           `---------------------------'    `---------------------------'
  */
 
@@ -63,8 +66,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    \
   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,         KC_H,    KC_J,    KC_K,    KC_L,    RSFT_T(KC_ENT) , \
   CTL_T(KC_Z),    KC_X,    KC_C,    KC_V,    KC_B,         KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, \
-  XXXXXXX, XXXXXXX, KC_LGUI, LT(NUMBERS,KC_SPC), MNAVIG, LT(SYMB,KC_DEL), KC_BSPC , MO(FUNC) , MO(FUNC), XXXXXXX      \
+  XXXXXXX, XXXXXXX, MT(KC_LALT,KC_LGUI), LT(NUMBERS,KC_SPC), MNAVIG, LT(SYMB,KC_DEL), KC_BSPC , MO(FUNC) , MO(FUNC), XXXXXXX      \
 ),
+
+
 
 /* Navigation
 *
@@ -73,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 * |------+------+------+------+------|           |------+------+------+------+------|
 * | CSTb |CTb   |ASTab | AlTb | Tab  |           |ScrUp | Left | Down | Right| Enter|
 * |------+------+------+------+------|           |------+------+------+------+------|
-* | Ctrl | Undo |      |      | GUI  |           |ScrDwn| Home |      | End  |      |
+* | Ctrl | Undo |Email |      | GUI  |           |ScrDwn| Home |      | End  |      |
 * `----------------------------------'           `----------------------------------'
 *            ,---------------------------.    ,---------------------------.
 *            |      |      |      |      |    | Del  |BckSpc|      |      |
@@ -84,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [NAVIG] = KEYMAP( \
   KC_ESC ,         LCTL(KC_W),   XXXXXXX, XXXXXXX, LSFT(LCTL(KC_T)) ,     LCTL(KC_0) ,   KC_PGUP, KC_UP  ,   KC_PGDN, LALT(KC_F4) , \
   LSFT(LCTL(KC_TAB)), LCTL(KC_TAB), SFT_ALT_TAB, ALT_TAB, KC_TAB ,               KC_MS_WH_UP,   KC_LEFT, KC_DOWN,   KC_RGHT, _______ , \
-  KC_LCTL,         LCTL(KC_Z),   XXXXXXX, XXXXXXX, KC_LGUI,               KC_MS_WH_DOWN, KC_HOME, XXXXXXX ,  KC_END,  XXXXXXX,  \
+  KC_LCTL,         LCTL(KC_Z),   MEMAIL, XXXXXXX, KC_LGUI,               KC_MS_WH_DOWN, KC_HOME, XXXXXXX ,  KC_END,  XXXXXXX,  \
   XXXXXXX,          _______,     _______, _______, _______,               KC_DEL,        KC_BSPC,  _______,  _______, XXXXXXX          \
 ),
 
@@ -154,6 +159,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    XXXXXXX, _______, _______, _______, _______,      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX            \
 ),
 
+/* Mouse
+ *
+ * ,----------------------------------.           ,----------------------------------.
+ * |      |      |      |      |      |           |      |      |  Up  |      |      |
+ * |------+------+------+------+------|           |------+------+------+------+------|
+ * |      |      |      |      |      |           |      | Left | Down | Right|      |
+ * |------+------+------+------+------|           |------+------+------+------+------|
+ * |      |      |      |      |      |           |      | BTN1 |BTN3  | BTN2 |      |
+ * `----------------------------------'           `----------------------------------'
+ *            ,---------------------------.    ,---------------------------.
+ *            |      |      |      |      |    |      |      |      |      |
+ *            |      |      |      |      |    |      |      |      |      |
+ *            `---------------------------'    `---------------------------'
+ */
+[MOUSE] = KEYMAP( \
+  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX, XXXXXXX, KC_MS_U, XXXXXXX, XXXXXXX, \
+  _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R, XXXXXXX, \
+  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,      XXXXXXX, KC_BTN1, KC_BTN3, KC_BTN2, XXXXXXX, \
+  XXXXXXX, _______, _______, _______, _______,      _______, _______, _______, _______, XXXXXXX  \
+),
+
 
 /* Blank
  *
@@ -191,6 +217,13 @@ void matrix_init_user(void) {
 
 }
 
+void keyboard_post_init_user(void) {
+  // Customise these values to desired behaviour
+  debug_enable=true;
+  debug_matrix=true;
+  //debug_keyboard=true;
+  //debug_mouse=true;
+}
 
 
 bool is_alt_tab_active = false;
@@ -200,6 +233,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     // Use one button in the navig layer for alt tab. When you let go of navig key, alt is also released
     case ALT_TAB:
+      print("alt tab key was pressed");
+      uprintf("hello altab");
       if (record->event.pressed) {
         if (!is_alt_tab_active) { //First time we press it
           is_alt_tab_active = true;
@@ -226,6 +261,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
 
     case MNAVIG: //deals with navigation layer, clear alttab, and presses tab if only pressed for a bit.
+      xprintf("hello, %d",5);
       if(record->event.pressed){
         mnavig_timer = timer_read();
         layer_on(NAVIG);
@@ -237,6 +273,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           tap_code(KC_TAB);
         }
       }
+      break;
+    case MEMAIL:
+      if(record->event.pressed){
+        SEND_STRING("hal.frig@gmail.com");
+      }else{
+
+      }
+      break;
+
+
   }
   return true;
 };

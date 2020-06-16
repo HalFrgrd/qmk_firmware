@@ -21,5 +21,9 @@
 
 // place overrides here
 #define TAPPING_TERM 200
+#define MOUSE_KEY_DELAY 200
+#define MOUSEKEY_INTERVAL 16
+#define MOUSEKEY_MAX_SPEED 4
+#define MOUSEKEY_TIME_TO_MAX 8
 
 #endif
