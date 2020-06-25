@@ -447,6 +447,19 @@ ifeq ($(strip $(OLED_DRIVER_ENABLE)), yes)
     SRC += oled_driver.c
 endif
 
+ifeq ($(strip $(SPI_MASTER_DRIVER_ENABLE)), yes)
+    COMMON_VPATH += $(DRIVER_PATH)/avr
+    QUANTUM_LIB_SRC += spi_master.c
+    SRC += spi_master.c
+endif
+
+ifeq ($(strip $(ILI9341_ENABLE)), yes)
+    COMMON_VPATH += $(DRIVER_PATH)/ILI9341
+    QUANTUM_LIB_SRC += ILI9341_hf.c
+    SRC += ILI9341_hf.c
+endif
+
+
 include $(DRIVER_PATH)/qwiic/qwiic.mk
 
 ifeq ($(strip $(UCIS_ENABLE)), yes)

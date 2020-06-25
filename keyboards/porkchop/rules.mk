@@ -71,6 +71,10 @@ UNICODE_ENABLE = yes 		# Unicode
 TAP_DANCE_ENABLE = yes
 # AUTO_SHIFT_ENABLE = yes
 
+#For the ili9341
+SPI_MASTER_DRIVER_ENABLE = yes
+ILI9341_ENABLE = yes
+
 USB = /dev/ttyACM0
 
 # upload: build

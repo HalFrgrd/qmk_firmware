@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define VENDOR_ID       0xFEED
 #define PRODUCT_ID      0x6060
 #define DEVICE_VER      0x0001
-#define MANUFACTURER    Unknown
+#define MANUFACTURER    HalFrgrd
 #define PRODUCT         Porkchop
 #define DESCRIPTION     Porkchop wireless keyboard
 
@@ -47,12 +47,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
 )
 
-/*
- * Feature disable options
- *  These options are also useful to firmware size reduction.
- */
-
 #define PREVENT_STUCK_MODIFIERS
+
+#define SPI_DRIVER
 
 /* disable debug print */
 //#define NO_DEBUG
