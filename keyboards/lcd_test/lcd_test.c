@@ -1,0 +1,121 @@
+/* Copyright 2020 HalFrgrd
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "lcd_test.h"
+#include "qp_ili9341.h"
+#include <color.h>
+#include "rgblight_list.h"
+
+#include "print.h"
+#include <print.h>
+#include "debug.h"
+#include "util.h"
+//#include "gfx-badge-dark_160px_4bpp.c"
+
+
+painter_device_t lcd;
+
+
+// Optional override functions below.
+// You can leave any or all of these undefined.
+// These are only required if you want to perform custom actions.
+
+void keyboard_post_init_kb(void) {
+    debug_enable = true;
+    debug_matrix = true;
+
+    // Turn on the LCD
+    // setPinOutput(LCD_LED_PIN);
+    // writePinHigh(LCD_LED_PIN);
+
+    // Turn on the RGB
+    // setPinOutput(RGB_POWER_ENABLE_PIN);
+    // writePinLow(RGB_POWER_ENABLE_PIN);
+
+    // Initialise the LCD
+    xprintf("initialising lcd %d \n", 5);
+    print("initialising lcd2");
+    uprint("initialising lcd3");
+    lcd = qp_make_ili9341_device(LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, true);
+    qp_init(lcd, QP_ROTATION_180);
+
+#define NUM_ROWS (320) //- GFX_BADGE_DARK_160PX_4BPP_HEIGHT)
+#define NUM_COLS (240)
+    for (uint32_t r = 0; r < 320; ++r) {
+        uint8_t pix_data[2 * NUM_COLS] = {0};
+        if (r < NUM_ROWS) {
+            for (uint32_t c = 0; c < NUM_COLS; ++c) {
+                HSV      hsv        = {r * 255 / NUM_ROWS, 255, c * 255 / NUM_COLS};
+                RGB      rgb        = hsv_to_rgb(hsv);
+                uint16_t pixel      = (rgb.r >> 3) << 11 | (rgb.g >> 2) << 5 | (rgb.b >> 3);
+                pix_data[c * 2 + 0] = pixel >> 8;
+                pix_data[c * 2 + 1] = pixel & 0xFF;
+            }
+        }
+
+        qp_viewport(lcd, 0, r, NUM_COLS - 1, r);
+        qp_pixdata(lcd, pix_data, sizeof(pix_data));
+    }
+
+    // Turn on the backlight
+    setPinOutput(BACKLIGHT_PIN);
+    writePinHigh(BACKLIGHT_PIN);
+    // backlight_level(BACKLIGHT_LEVELS);
+
+    // Turn on the LCD
+    qp_power(lcd, true);
+
+    // Test drawing
+    qp_line(lcd, 60, 130, 240 - 60, 130, HSV_BLUE);
+    qp_rect(lcd, 20, 20, 120, 100, HSV_RED, true);
+    qp_rect(lcd, 20, 20, 120, 100, HSV_WHITE, false);
+    // qp_drawimage(lcd, (240 - GFX_BADGE_DARK_160PX_4BPP_WIDTH) / 2, 320 - GFX_BADGE_DARK_160PX_4BPP_HEIGHT, GFX_BADGE_DARK_160PX_4BPP_WIDTH, GFX_BADGE_DARK_160PX_4BPP_HEIGHT, GFX_BADGE_DARK_160PX_4BPP_FORMAT, gfx_badge_dark_160px_4bpp, GFX_BADGE_DARK_160PX_4BPP_BYTES);
+}
+
+void matrix_init_kb(void) {
+    debug_enable = true;
+    debug_matrix = true;
+    // put your keyboard start-up code here
+    // runs once when the firmware starts up
+    xprintf("this is running %d \n", 4);
+    matrix_init_user();
+}
+
+
+void matrix_scan_kb(void) {
+    // put your looping keyboard code here
+    // runs every cycle (a lot)
+    // xprintf("this is running a lot %d \n", 5);
+ 
+
+    matrix_scan_user();
+
+}
+/*
+
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+    // put your per-action keyboard code here
+    // runs for every action, just before processing by the firmware
+
+    return process_record_user(keycode, record);
+}
+
+bool led_update_kb(led_t led_state) {
+    // put your keyboard LED indicator (ex: Caps Lock LED) toggling code here
+
+    return led_update_user(led_state);
+}
+*/
